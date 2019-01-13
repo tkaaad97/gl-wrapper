@@ -1,0 +1,55 @@
+name:                gl-wrapper
+version:             0.1.0.0
+github:              "githubuser/gl-wrapper"
+license:             BSD3
+author:              "Author name here"
+maintainer:          "example@example.com"
+copyright:           "2018 Author name here"
+verbatim:
+  cabal-version: 2.0
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/githubuser/gl-wrapper#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- gl
+- hashable
+- linear
+- text
+- transformers
+- vector
+
+library:
+  source-dirs: src
+  ghc-options:
+    - -Wall
+    - -Wcompat
+    - -Wredundant-constraints
+  dependencies: []
+
+executables:
+  example1:
+    main:                Example1.hs
+    source-dirs:         examples
+    ghc-options:
+    - -Wall
+    - -Wcompat
+    - -Wredundant-constraints
+    dependencies:
+    - GLFW-b
+    - bytestring
+    - containers
+    - file-embed
+    - gl-wrapper
+    - string-qq
