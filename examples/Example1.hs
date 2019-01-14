@@ -210,6 +210,7 @@ setVertexArrayAttribFormatAndBinding vao attribLocation (AttribBinding binding' 
 getAttribLocation :: GLW.Program -> ByteString -> IO GLW.AttribLocation
 getAttribLocation program attribName =
     BS.useAsCString attribName $ \a -> do
-        al <- GLW.glGetAttribLocation program a
-        when (al < 0) (throwIO . userError $ "failed to getAttribLocation")
-        return (GLW.AttribLocation . fromIntegral $ al)
+        r <- GLW.glGetAttribLocation program a
+        case r of
+            Just al -> return al
+            Nothing -> throwIO . userError $ "failed to getAttribLocation"

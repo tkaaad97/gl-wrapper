@@ -3,9 +3,15 @@ module GLW.Types
     , AttribLocation(..)
     , BindingIndex(..)
     , TextureUnit(..)
+    , validate
     ) where
 
 import qualified Graphics.GL as GL
+
+validate :: (a -> Bool) -> a -> Maybe a
+validate f a
+    | f a = Just a
+    | otherwise = Nothing
 
 newtype UniformLocation = UniformLocation {
     unUniformLocation :: GL.GLint

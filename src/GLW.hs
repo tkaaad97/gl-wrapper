@@ -2281,7 +2281,7 @@ import GLW.Internal.Groups
 import GLW.Internal.Objects
 import GLW.Types
 import GLW.Uniforms
-import Prelude ((<$>))
+import Prelude (Eq(..), Maybe, Ord(..), (.), (<$>), fmap, fromIntegral)
 
 glActiveShaderProgram :: MonadIO m => ProgramPipeline -> Program -> m ()
 glActiveShaderProgram pipeline program = GL.glActiveShaderProgram (coerce pipeline) (coerce program)
@@ -3855,11 +3855,11 @@ glGetAttachedObjectsARB containerObj maxCount count obj = GL.glGetAttachedObject
 glGetAttachedShaders :: MonadIO m => Program -> GL.GLsizei -> Ptr GL.GLsizei -> Ptr (Shader (a :: ShaderType)) -> m ()
 glGetAttachedShaders program maxCount count shaders = GL.glGetAttachedShaders (coerce program) maxCount count (coerce shaders)
 
-glGetAttribLocation :: MonadIO m => Program -> Ptr GL.GLchar -> m GL.GLint
-glGetAttribLocation program name = GL.glGetAttribLocation (coerce program) name
+glGetAttribLocation :: MonadIO m => Program -> Ptr GL.GLchar -> m (Maybe AttribLocation)
+glGetAttribLocation program name = fmap (AttribLocation . fromIntegral) . validate (0 >=) <$> GL.glGetAttribLocation (coerce program) name
 
-glGetAttribLocationARB :: MonadIO m => GL.GLhandleARB -> Ptr GL.GLcharARB -> m GL.GLint
-glGetAttribLocationARB programObj name = GL.glGetAttribLocationARB programObj name
+glGetAttribLocationARB :: MonadIO m => GL.GLhandleARB -> Ptr GL.GLcharARB -> m (Maybe AttribLocation)
+glGetAttribLocationARB programObj name = fmap (AttribLocation . fromIntegral) . validate (0 >=) <$> GL.glGetAttribLocationARB programObj name
 
 glGetBooleanIndexedvEXT :: MonadIO m => GL.GLenum -> GL.GLuint -> Ptr Boolean -> m ()
 glGetBooleanIndexedvEXT target index data' = GL.glGetBooleanIndexedvEXT target index (coerce data')
@@ -4590,11 +4590,11 @@ glGetUniformBufferSizeEXT program location = GL.glGetUniformBufferSizeEXT (coerc
 glGetUniformIndices :: MonadIO m => Program -> GL.GLsizei -> Ptr (Ptr GL.GLchar) -> Ptr GL.GLuint -> m ()
 glGetUniformIndices program uniformCount uniformNames uniformIndices = GL.glGetUniformIndices (coerce program) uniformCount uniformNames uniformIndices
 
-glGetUniformLocation :: MonadIO m => Program -> Ptr GL.GLchar -> m GL.GLint
-glGetUniformLocation program name = GL.glGetUniformLocation (coerce program) name
+glGetUniformLocation :: MonadIO m => Program -> Ptr GL.GLchar -> m (Maybe UniformLocation)
+glGetUniformLocation program name = fmap (UniformLocation . fromIntegral) . validate (>= 0) <$> GL.glGetUniformLocation (coerce program) name
 
-glGetUniformLocationARB :: MonadIO m => GL.GLhandleARB -> Ptr GL.GLcharARB -> m GL.GLint
-glGetUniformLocationARB programObj name = GL.glGetUniformLocationARB programObj name
+glGetUniformLocationARB :: MonadIO m => GL.GLhandleARB -> Ptr GL.GLcharARB -> m (Maybe UniformLocation)
+glGetUniformLocationARB programObj name = fmap (UniformLocation . fromIntegral) . validate (>= 0) <$> GL.glGetUniformLocationARB programObj name
 
 glGetUniformOffsetEXT :: MonadIO m => Program -> UniformLocation -> m GL.GLintptr
 glGetUniformOffsetEXT program location = GL.glGetUniformOffsetEXT (coerce program) (coerce location)
