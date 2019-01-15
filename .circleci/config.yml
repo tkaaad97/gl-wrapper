@@ -1,0 +1,38 @@
+version: 2
+jobs:
+  ghc-8.6.3:
+    docker:
+      - image: tkaaad97/gl-wrapper-ci:ghc-8.6.3
+    steps:
+      - checkout
+      - restore_cache:
+          key: build-cache-{{ checksum "package.yaml" }}-ghc-8.6.3
+      - run: "stack init --resolver=lts-13.3 && stack config set system-ghc true && stack build"
+      - save_cache:
+          key: build-cache-{{ checksum "package.yaml" }}-ghc-8.6.3
+          paths:
+            - /root/.stack
+            - /root/.ghc
+            - .stack-work
+
+  ghc-8.4.4:
+    docker:
+      - image: tkaaad97/gl-wrapper-ci:ghc-8.4.4
+    steps:
+      - checkout
+      - restore_cache:
+          key: build-cache-{{ checksum "package.yaml" }}-ghc-8.4.4
+      - run: "stack init --resolver=lts-12.26 && stack config set system-ghc true && stack build"
+      - save_cache:
+          key: build-cache-{{ checksum "package.yaml" }}-ghc-8.4.4
+          paths:
+            - /root/.stack
+            - /root/.ghc
+            - .stack-work
+
+workflows:
+  version: 2
+  main:
+    jobs:
+      - ghc-8.6.3
+      - ghc-8.4.4
