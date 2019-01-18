@@ -3856,10 +3856,10 @@ glGetAttachedShaders :: MonadIO m => Program -> GL.GLsizei -> Ptr GL.GLsizei -> 
 glGetAttachedShaders program maxCount count shaders = GL.glGetAttachedShaders (coerce program) maxCount count (coerce shaders)
 
 glGetAttribLocation :: MonadIO m => Program -> Ptr GL.GLchar -> m (Maybe AttribLocation)
-glGetAttribLocation program name = fmap (AttribLocation . fromIntegral) . validate (0 >=) <$> GL.glGetAttribLocation (coerce program) name
+glGetAttribLocation program name = fmap (AttribLocation . fromIntegral) . validate (>= 0) <$> GL.glGetAttribLocation (coerce program) name
 
 glGetAttribLocationARB :: MonadIO m => GL.GLhandleARB -> Ptr GL.GLcharARB -> m (Maybe AttribLocation)
-glGetAttribLocationARB programObj name = fmap (AttribLocation . fromIntegral) . validate (0 >=) <$> GL.glGetAttribLocationARB programObj name
+glGetAttribLocationARB programObj name = fmap (AttribLocation . fromIntegral) . validate (>= 0) <$> GL.glGetAttribLocationARB programObj name
 
 glGetBooleanIndexedvEXT :: MonadIO m => GL.GLenum -> GL.GLuint -> Ptr Boolean -> m ()
 glGetBooleanIndexedvEXT target index data' = GL.glGetBooleanIndexedvEXT target index (coerce data')
@@ -4470,8 +4470,8 @@ glGetStringi name index = GL.glGetStringi name index
 glGetSubroutineIndex :: MonadIO m => Program -> GL.GLenum -> Ptr GL.GLchar -> m GL.GLuint
 glGetSubroutineIndex program shadertype name = GL.glGetSubroutineIndex (coerce program) shadertype name
 
-glGetSubroutineUniformLocation :: MonadIO m => Program -> GL.GLenum -> Ptr GL.GLchar -> m GL.GLint
-glGetSubroutineUniformLocation program shadertype name = GL.glGetSubroutineUniformLocation (coerce program) shadertype name
+glGetSubroutineUniformLocation :: MonadIO m => Program -> GL.GLenum -> Ptr GL.GLchar -> m (Maybe UniformLocation)
+glGetSubroutineUniformLocation program shadertype name = fmap (UniformLocation . fromIntegral) . validate (>= 0) <$> GL.glGetSubroutineUniformLocation (coerce program) shadertype name
 
 glGetSynciv :: MonadIO m => GL.GLsync -> GL.GLenum -> GL.GLsizei -> Ptr GL.GLsizei -> Ptr GL.GLint -> m ()
 glGetSynciv sync pname bufSize length values = GL.glGetSynciv sync pname bufSize length values
