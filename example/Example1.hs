@@ -7,8 +7,6 @@
 module Main where
 
 import Control.Exception (throwIO)
-import Control.Monad (when)
-import Data.Bits (Bits(..))
 import Data.ByteString (ByteString)
 import qualified Data.ByteString as BS (useAsCString, useAsCStringLen)
 import Data.IntMap.Strict (IntMap)
@@ -24,7 +22,6 @@ import Foreign (Storable(..), castPtr, plusPtr, sizeOf, with)
 import qualified GLW
 import qualified GLW.Groups.ClearBufferMask
 import qualified GLW.Groups.PrimitiveType
-import qualified GLW.Internal.Objects as GLW (Program(..))
 import qualified Graphics.GL as GL
 import qualified Graphics.UI.GLFW as GLFW
 import Linear (V3(..), V4(..))
@@ -94,7 +91,7 @@ main = withWindow 640 480 "example1" app
         GLW.glClear GLW.Groups.ClearBufferMask.glColorBufferBit
         GLW.glBindVertexArray va
         GLW.glDrawArrays GLW.Groups.PrimitiveType.glTriangles 0 (fromIntegral $ Vector.length vertices)
-        GLW.glUseProgram (GLW.Program 0)
+        GLW.glUseProgram GLW.zero
 
     onError _ e m =
         putStrLn $ unwords [show e, show m]
@@ -183,7 +180,7 @@ mkVertexArray attribBindings buffers indexBuffer program = do
     mapM_ (setAttrib va) (Map.toList attribBindings)
     mapM_ (setBindingBuffer va) . IntMap.toList $ buffers
     maybe (return ()) (GLW.glVertexArrayElementBuffer va) indexBuffer
-    GLW.glUseProgram (GLW.Program 0)
+    GLW.glUseProgram GLW.zero
     return va
 
     where
