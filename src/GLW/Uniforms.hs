@@ -8,6 +8,7 @@ module GLW.Uniforms
     ) where
 
 import Control.Monad.IO.Class (MonadIO, liftIO)
+import Data.ByteString (ByteString, useAsCString)
 import Data.Coerce (coerce)
 import Data.Vector.Storable (Vector)
 import qualified Data.Vector.Storable as Vector (length, unsafeWith)
@@ -17,9 +18,9 @@ import GLW.Types (UniformLocation(..))
 import qualified Graphics.GL as GL
 import Linear (V1(..), V2(..), V3(..), V4(..))
 
-getUniformLocation :: Program -> Ptr GL.GLchar -> IO (Maybe UniformLocation)
+getUniformLocation :: Program -> ByteString -> IO (Maybe UniformLocation)
 getUniformLocation p uname = do
-    loc <- GL.glGetUniformLocation (coerce p) uname
+    loc <- useAsCString uname $ \cs -> GL.glGetUniformLocation (coerce p) cs
     if loc < 0
         then return Nothing
         else return (Just (UniformLocation loc))
@@ -164,7 +165,7 @@ instance Uniform GL.GLdouble where
     programUniformv program loc vec = liftIO . Vector.unsafeWith vec $
         programUniform1v program (coerce loc) (fromIntegral . Vector.length $ vec)
 
-instance UniformComponent a => Uniform (V1 a) where
+instance {-# OVERLAPS #-} UniformComponent a => Uniform (V1 a) where
     uniform loc (V1 a0) = uniform1 (coerce loc) a0
     uniformv loc vec = liftIO . Vector.unsafeWith vec $ \p ->
         uniform1v (coerce loc) (fromIntegral . Vector.length $ vec) (coerce p :: Ptr a)
@@ -172,7 +173,7 @@ instance UniformComponent a => Uniform (V1 a) where
     programUniformv program loc vec = liftIO . Vector.unsafeWith vec $ \p ->
         programUniform1v program (coerce loc) (fromIntegral . Vector.length $ vec) (coerce p :: Ptr a)
 
-instance UniformComponent a => Uniform (V2 a) where
+instance {-# OVERLAPS #-} UniformComponent a => Uniform (V2 a) where
     uniform loc (V2 a0 a1) = uniform2 (coerce loc) a0 a1
     uniformv loc vec = liftIO . Vector.unsafeWith vec $ \p ->
         uniform2v (coerce loc) (fromIntegral . Vector.length $ vec) (coerce p :: Ptr a)
@@ -180,7 +181,7 @@ instance UniformComponent a => Uniform (V2 a) where
     programUniformv program loc vec = liftIO . Vector.unsafeWith vec $ \p ->
         programUniform2v program (coerce loc) (fromIntegral . Vector.length $ vec) (coerce p :: Ptr a)
 
-instance UniformComponent a => Uniform (V3 a) where
+instance {-# OVERLAPS #-} UniformComponent a => Uniform (V3 a) where
     uniform loc (V3 a0 a1 a2) = uniform3 (coerce loc) a0 a1 a2
     uniformv loc vec = liftIO . Vector.unsafeWith vec $ \p ->
         uniform3v (coerce loc) (fromIntegral . Vector.length $ vec) (coerce p :: Ptr a)
@@ -188,7 +189,7 @@ instance UniformComponent a => Uniform (V3 a) where
     programUniformv program loc vec = liftIO . Vector.unsafeWith vec $ \p ->
         programUniform3v program (coerce loc) (fromIntegral . Vector.length $ vec) (coerce p :: Ptr a)
 
-instance UniformComponent a => Uniform (V4 a) where
+instance {-# OVERLAPS #-} UniformComponent a => Uniform (V4 a) where
     uniform loc (V4 a0 a1 a2 a3) = uniform4 (coerce loc) a0 a1 a2 a3
     uniformv loc vec = liftIO . Vector.unsafeWith vec $ \p ->
         uniform4v (coerce loc) (fromIntegral . Vector.length $ vec) (coerce p :: Ptr a)
