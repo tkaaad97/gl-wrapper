@@ -24,13 +24,14 @@ import qualified GLW.Groups.ClearBufferMask
 import qualified GLW.Groups.PrimitiveType
 import qualified Graphics.GL as GL
 import qualified Graphics.UI.GLFW as GLFW
-import Linear (V3(..), V4(..))
+import Linear (M44, V3(..), V4(..))
+import qualified Linear (identity)
 import System.Exit (exitSuccess)
 import System.IO.Error (userError)
 import Types
 import Window
 
-data Handle = Handle !GLW.Program ![GLW.Buffer] !GLW.VertexArray
+data Handle = Handle !GLW.Program ![GLW.Buffer] !GLW.VertexArray !GLW.UniformLocation
 
 data Vertex = Vertex (V3 GL.GLfloat) (V4 GL.GLfloat)
     deriving (Show, Eq)
@@ -61,6 +62,9 @@ main = withWindow 640 480 "example1" app
         , Vertex (V3 1 0 0) (V4 1 1 1 1)
         ]
 
+    pvm :: M44 Float
+    pvm = Linear.identity
+
     app = App initialize onDraw (Just onResize) (Just onError) (Just onShutdown)
 
     attribBindings = Map.fromList
@@ -80,23 +84,25 @@ main = withWindow 640 480 "example1" app
         bufferBindings <- mapM mkBufferBinding bufferSources
         let buffers = map fst . IntMap.elems $ bufferBindings
         va <- mkVertexArray attribBindings bufferBindings Nothing program
-        return (Handle program buffers va)
+        ul <- maybe (throwIO . userError $ "uniform location not found") return =<< GLW.getUniformLocation program "projectionViewMatrix"
+        return (Handle program buffers va ul)
 
     onResize _ _ w h =
         GLW.glViewport 0 0 (fromIntegral w) (fromIntegral h)
 
-    onDraw _ (Handle program _ va) = do
+    onDraw _ (Handle program _ va ul) = do
         GLW.glUseProgram program
         GLW.glClearColor 1 1 1 1
         GLW.glClear GLW.Groups.ClearBufferMask.glColorBufferBit
         GLW.glBindVertexArray va
+        GLW.uniform ul pvm
         GLW.glDrawArrays GLW.Groups.PrimitiveType.glTriangles 0 (fromIntegral $ Vector.length vertices)
         GLW.glUseProgram GLW.zero
 
     onError _ e m =
         putStrLn $ unwords [show e, show m]
 
-    onShutdown (Handle program buffers va) win = do
+    onShutdown (Handle program buffers va _) win = do
         GLW.deleteObject program
         GLW.deleteObjects buffers
         GLW.deleteObject va
