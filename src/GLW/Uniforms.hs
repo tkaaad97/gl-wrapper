@@ -209,26 +209,6 @@ instance Uniform (V2 (V2 GL.GLfloat)) where
 
 instance Uniform (V2 (V3 GL.GLfloat)) where
     uniform loc a = liftIO . Foreign.with a $ \p ->
-        GL.glUniformMatrix2x3fv (coerce loc) 1 GL.GL_TRUE (coerce p)
-    uniformv loc vec = liftIO . Vector.unsafeWith vec $ \p ->
-        GL.glUniformMatrix2x3fv (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
-    programUniform program loc a = liftIO . Foreign.with a $ \p ->
-        GL.glProgramUniformMatrix2x3fv (coerce program) (coerce loc) 1 GL.GL_TRUE (coerce p)
-    programUniformv program loc vec = liftIO . Vector.unsafeWith vec $ \p ->
-        GL.glProgramUniformMatrix2x3fv (coerce program) (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
-
-instance Uniform (V2 (V4 GL.GLfloat)) where
-    uniform loc a = liftIO . Foreign.with a $ \p ->
-        GL.glUniformMatrix2x4fv (coerce loc) 1 GL.GL_TRUE (coerce p)
-    uniformv loc vec = liftIO . Vector.unsafeWith vec $ \p ->
-        GL.glUniformMatrix2x4fv (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
-    programUniform program loc a = liftIO . Foreign.with a $ \p ->
-        GL.glProgramUniformMatrix2x4fv (coerce program) (coerce loc) 1 GL.GL_TRUE (coerce p)
-    programUniformv program loc vec = liftIO . Vector.unsafeWith vec $ \p ->
-        GL.glProgramUniformMatrix2x4fv (coerce program) (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
-
-instance Uniform (V3 (V2 GL.GLfloat)) where
-    uniform loc a = liftIO . Foreign.with a $ \p ->
         GL.glUniformMatrix3x2fv (coerce loc) 1 GL.GL_TRUE (coerce p)
     uniformv loc vec = liftIO . Vector.unsafeWith vec $ \p ->
         GL.glUniformMatrix3x2fv (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
@@ -236,6 +216,26 @@ instance Uniform (V3 (V2 GL.GLfloat)) where
         GL.glProgramUniformMatrix3x2fv (coerce program) (coerce loc) 1 GL.GL_TRUE (coerce p)
     programUniformv program loc vec = liftIO . Vector.unsafeWith vec $ \p ->
         GL.glProgramUniformMatrix3x2fv (coerce program) (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
+
+instance Uniform (V2 (V4 GL.GLfloat)) where
+    uniform loc a = liftIO . Foreign.with a $ \p ->
+        GL.glUniformMatrix4x2fv (coerce loc) 1 GL.GL_TRUE (coerce p)
+    uniformv loc vec = liftIO . Vector.unsafeWith vec $ \p ->
+        GL.glUniformMatrix4x2fv (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
+    programUniform program loc a = liftIO . Foreign.with a $ \p ->
+        GL.glProgramUniformMatrix4x2fv (coerce program) (coerce loc) 1 GL.GL_TRUE (coerce p)
+    programUniformv program loc vec = liftIO . Vector.unsafeWith vec $ \p ->
+        GL.glProgramUniformMatrix4x2fv (coerce program) (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
+
+instance Uniform (V3 (V2 GL.GLfloat)) where
+    uniform loc a = liftIO . Foreign.with a $ \p ->
+        GL.glUniformMatrix2x3fv (coerce loc) 1 GL.GL_TRUE (coerce p)
+    uniformv loc vec = liftIO . Vector.unsafeWith vec $ \p ->
+        GL.glUniformMatrix2x3fv (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
+    programUniform program loc a = liftIO . Foreign.with a $ \p ->
+        GL.glProgramUniformMatrix2x3fv (coerce program) (coerce loc) 1 GL.GL_TRUE (coerce p)
+    programUniformv program loc vec = liftIO . Vector.unsafeWith vec $ \p ->
+        GL.glProgramUniformMatrix2x3fv (coerce program) (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
 
 instance Uniform (V3 (V3 GL.GLfloat)) where
     uniform loc a = liftIO . Foreign.with a $ \p ->
@@ -249,26 +249,6 @@ instance Uniform (V3 (V3 GL.GLfloat)) where
 
 instance Uniform (V3 (V4 GL.GLfloat)) where
     uniform loc a = liftIO . Foreign.with a $ \p ->
-        GL.glUniformMatrix3x4fv (coerce loc) 1 GL.GL_TRUE (coerce p)
-    uniformv loc vec = liftIO . Vector.unsafeWith vec $ \p ->
-        GL.glUniformMatrix3x4fv (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
-    programUniform program loc a = liftIO . Foreign.with a $ \p ->
-        GL.glProgramUniformMatrix3x4fv (coerce program) (coerce loc) 1 GL.GL_TRUE (coerce p)
-    programUniformv program loc vec = liftIO . Vector.unsafeWith vec $ \p ->
-        GL.glProgramUniformMatrix3x4fv (coerce program) (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
-
-instance Uniform (V4 (V2 GL.GLfloat)) where
-    uniform loc a = liftIO . Foreign.with a $ \p ->
-        GL.glUniformMatrix4x2fv (coerce loc) 1 GL.GL_TRUE (coerce p)
-    uniformv loc vec = liftIO . Vector.unsafeWith vec $ \p ->
-        GL.glUniformMatrix4x2fv (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
-    programUniform program loc a = liftIO . Foreign.with a $ \p ->
-        GL.glProgramUniformMatrix4x2fv (coerce program) (coerce loc) 1 GL.GL_TRUE (coerce p)
-    programUniformv program loc vec = liftIO . Vector.unsafeWith vec $ \p ->
-        GL.glProgramUniformMatrix4x2fv (coerce program) (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
-
-instance Uniform (V4 (V3 GL.GLfloat)) where
-    uniform loc a = liftIO . Foreign.with a $ \p ->
         GL.glUniformMatrix4x3fv (coerce loc) 1 GL.GL_TRUE (coerce p)
     uniformv loc vec = liftIO . Vector.unsafeWith vec $ \p ->
         GL.glUniformMatrix4x3fv (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
@@ -276,6 +256,26 @@ instance Uniform (V4 (V3 GL.GLfloat)) where
         GL.glProgramUniformMatrix4x3fv (coerce program) (coerce loc) 1 GL.GL_TRUE (coerce p)
     programUniformv program loc vec = liftIO . Vector.unsafeWith vec $ \p ->
         GL.glProgramUniformMatrix4x3fv (coerce program) (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
+
+instance Uniform (V4 (V2 GL.GLfloat)) where
+    uniform loc a = liftIO . Foreign.with a $ \p ->
+        GL.glUniformMatrix2x4fv (coerce loc) 1 GL.GL_TRUE (coerce p)
+    uniformv loc vec = liftIO . Vector.unsafeWith vec $ \p ->
+        GL.glUniformMatrix2x4fv (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
+    programUniform program loc a = liftIO . Foreign.with a $ \p ->
+        GL.glProgramUniformMatrix2x4fv (coerce program) (coerce loc) 1 GL.GL_TRUE (coerce p)
+    programUniformv program loc vec = liftIO . Vector.unsafeWith vec $ \p ->
+        GL.glProgramUniformMatrix2x4fv (coerce program) (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
+
+instance Uniform (V4 (V3 GL.GLfloat)) where
+    uniform loc a = liftIO . Foreign.with a $ \p ->
+        GL.glUniformMatrix3x4fv (coerce loc) 1 GL.GL_TRUE (coerce p)
+    uniformv loc vec = liftIO . Vector.unsafeWith vec $ \p ->
+        GL.glUniformMatrix3x4fv (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
+    programUniform program loc a = liftIO . Foreign.with a $ \p ->
+        GL.glProgramUniformMatrix3x4fv (coerce program) (coerce loc) 1 GL.GL_TRUE (coerce p)
+    programUniformv program loc vec = liftIO . Vector.unsafeWith vec $ \p ->
+        GL.glProgramUniformMatrix3x4fv (coerce program) (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
 
 instance Uniform (V4 (V4 GL.GLfloat)) where
     uniform loc a = liftIO . Foreign.with a $ \p ->
@@ -299,26 +299,6 @@ instance Uniform (V2 (V2 GL.GLdouble)) where
 
 instance Uniform (V2 (V3 GL.GLdouble)) where
     uniform loc a = liftIO . Foreign.with a $ \p ->
-        GL.glUniformMatrix2x3dv (coerce loc) 1 GL.GL_TRUE (coerce p)
-    uniformv loc vec = liftIO . Vector.unsafeWith vec $ \p ->
-        GL.glUniformMatrix2x3dv (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
-    programUniform program loc a = liftIO . Foreign.with a $ \p ->
-        GL.glProgramUniformMatrix2x3dv (coerce program) (coerce loc) 1 GL.GL_TRUE (coerce p)
-    programUniformv program loc vec = liftIO . Vector.unsafeWith vec $ \p ->
-        GL.glProgramUniformMatrix2x3dv (coerce program) (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
-
-instance Uniform (V2 (V4 GL.GLdouble)) where
-    uniform loc a = liftIO . Foreign.with a $ \p ->
-        GL.glUniformMatrix2x4dv (coerce loc) 1 GL.GL_TRUE (coerce p)
-    uniformv loc vec = liftIO . Vector.unsafeWith vec $ \p ->
-        GL.glUniformMatrix2x4dv (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
-    programUniform program loc a = liftIO . Foreign.with a $ \p ->
-        GL.glProgramUniformMatrix2x4dv (coerce program) (coerce loc) 1 GL.GL_TRUE (coerce p)
-    programUniformv program loc vec = liftIO . Vector.unsafeWith vec $ \p ->
-        GL.glProgramUniformMatrix2x4dv (coerce program) (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
-
-instance Uniform (V3 (V2 GL.GLdouble)) where
-    uniform loc a = liftIO . Foreign.with a $ \p ->
         GL.glUniformMatrix3x2dv (coerce loc) 1 GL.GL_TRUE (coerce p)
     uniformv loc vec = liftIO . Vector.unsafeWith vec $ \p ->
         GL.glUniformMatrix3x2dv (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
@@ -326,6 +306,26 @@ instance Uniform (V3 (V2 GL.GLdouble)) where
         GL.glProgramUniformMatrix3x2dv (coerce program) (coerce loc) 1 GL.GL_TRUE (coerce p)
     programUniformv program loc vec = liftIO . Vector.unsafeWith vec $ \p ->
         GL.glProgramUniformMatrix3x2dv (coerce program) (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
+
+instance Uniform (V2 (V4 GL.GLdouble)) where
+    uniform loc a = liftIO . Foreign.with a $ \p ->
+        GL.glUniformMatrix4x2dv (coerce loc) 1 GL.GL_TRUE (coerce p)
+    uniformv loc vec = liftIO . Vector.unsafeWith vec $ \p ->
+        GL.glUniformMatrix4x2dv (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
+    programUniform program loc a = liftIO . Foreign.with a $ \p ->
+        GL.glProgramUniformMatrix4x2dv (coerce program) (coerce loc) 1 GL.GL_TRUE (coerce p)
+    programUniformv program loc vec = liftIO . Vector.unsafeWith vec $ \p ->
+        GL.glProgramUniformMatrix4x2dv (coerce program) (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
+
+instance Uniform (V3 (V2 GL.GLdouble)) where
+    uniform loc a = liftIO . Foreign.with a $ \p ->
+        GL.glUniformMatrix2x3dv (coerce loc) 1 GL.GL_TRUE (coerce p)
+    uniformv loc vec = liftIO . Vector.unsafeWith vec $ \p ->
+        GL.glUniformMatrix2x3dv (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
+    programUniform program loc a = liftIO . Foreign.with a $ \p ->
+        GL.glProgramUniformMatrix2x3dv (coerce program) (coerce loc) 1 GL.GL_TRUE (coerce p)
+    programUniformv program loc vec = liftIO . Vector.unsafeWith vec $ \p ->
+        GL.glProgramUniformMatrix2x3dv (coerce program) (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
 
 instance Uniform (V3 (V3 GL.GLdouble)) where
     uniform loc a = liftIO . Foreign.with a $ \p ->
@@ -339,26 +339,6 @@ instance Uniform (V3 (V3 GL.GLdouble)) where
 
 instance Uniform (V3 (V4 GL.GLdouble)) where
     uniform loc a = liftIO . Foreign.with a $ \p ->
-        GL.glUniformMatrix3x4dv (coerce loc) 1 GL.GL_TRUE (coerce p)
-    uniformv loc vec = liftIO . Vector.unsafeWith vec $ \p ->
-        GL.glUniformMatrix3x4dv (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
-    programUniform program loc a = liftIO . Foreign.with a $ \p ->
-        GL.glProgramUniformMatrix3x4dv (coerce program) (coerce loc) 1 GL.GL_TRUE (coerce p)
-    programUniformv program loc vec = liftIO . Vector.unsafeWith vec $ \p ->
-        GL.glProgramUniformMatrix3x4dv (coerce program) (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
-
-instance Uniform (V4 (V2 GL.GLdouble)) where
-    uniform loc a = liftIO . Foreign.with a $ \p ->
-        GL.glUniformMatrix4x2dv (coerce loc) 1 GL.GL_TRUE (coerce p)
-    uniformv loc vec = liftIO . Vector.unsafeWith vec $ \p ->
-        GL.glUniformMatrix4x2dv (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
-    programUniform program loc a = liftIO . Foreign.with a $ \p ->
-        GL.glProgramUniformMatrix4x2dv (coerce program) (coerce loc) 1 GL.GL_TRUE (coerce p)
-    programUniformv program loc vec = liftIO . Vector.unsafeWith vec $ \p ->
-        GL.glProgramUniformMatrix4x2dv (coerce program) (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
-
-instance Uniform (V4 (V3 GL.GLdouble)) where
-    uniform loc a = liftIO . Foreign.with a $ \p ->
         GL.glUniformMatrix4x3dv (coerce loc) 1 GL.GL_TRUE (coerce p)
     uniformv loc vec = liftIO . Vector.unsafeWith vec $ \p ->
         GL.glUniformMatrix4x3dv (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
@@ -366,6 +346,26 @@ instance Uniform (V4 (V3 GL.GLdouble)) where
         GL.glProgramUniformMatrix4x3dv (coerce program) (coerce loc) 1 GL.GL_TRUE (coerce p)
     programUniformv program loc vec = liftIO . Vector.unsafeWith vec $ \p ->
         GL.glProgramUniformMatrix4x3dv (coerce program) (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
+
+instance Uniform (V4 (V2 GL.GLdouble)) where
+    uniform loc a = liftIO . Foreign.with a $ \p ->
+        GL.glUniformMatrix2x4dv (coerce loc) 1 GL.GL_TRUE (coerce p)
+    uniformv loc vec = liftIO . Vector.unsafeWith vec $ \p ->
+        GL.glUniformMatrix2x4dv (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
+    programUniform program loc a = liftIO . Foreign.with a $ \p ->
+        GL.glProgramUniformMatrix2x4dv (coerce program) (coerce loc) 1 GL.GL_TRUE (coerce p)
+    programUniformv program loc vec = liftIO . Vector.unsafeWith vec $ \p ->
+        GL.glProgramUniformMatrix2x4dv (coerce program) (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
+
+instance Uniform (V4 (V3 GL.GLdouble)) where
+    uniform loc a = liftIO . Foreign.with a $ \p ->
+        GL.glUniformMatrix3x4dv (coerce loc) 1 GL.GL_TRUE (coerce p)
+    uniformv loc vec = liftIO . Vector.unsafeWith vec $ \p ->
+        GL.glUniformMatrix3x4dv (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
+    programUniform program loc a = liftIO . Foreign.with a $ \p ->
+        GL.glProgramUniformMatrix3x4dv (coerce program) (coerce loc) 1 GL.GL_TRUE (coerce p)
+    programUniformv program loc vec = liftIO . Vector.unsafeWith vec $ \p ->
+        GL.glProgramUniformMatrix3x4dv (coerce program) (coerce loc) (fromIntegral . Vector.length $ vec) GL.GL_TRUE (coerce p)
 
 instance Uniform (V4 (V4 GL.GLdouble)) where
     uniform loc a = liftIO . Foreign.with a $ \p ->
