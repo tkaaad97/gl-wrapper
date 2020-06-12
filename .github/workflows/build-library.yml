@@ -1,0 +1,40 @@
+name: build
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - v*
+  release:
+    types:
+      - [published, created, edited]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        ghc:
+          - "8.2.2"
+          - "8.4.4"
+          - "8.6.5"
+          - "8.8.3"
+
+    container:
+      image: docker.pkg.github.com/tkaaad97/gl-wrapper/gl-wrapper-ci:ghc-${{ matrix.ghc }}
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+
+      - name: cache ~/.stack
+        uses: actions/cache@v2
+        with:
+          path: ~/.stack
+          key: ghc-${{ matrix.ghc }}-stack-${{ hashFiles('**/package.yaml') }}
+          restore-keys: |
+            ghc-${{ matrix.ghc }}-stack-
+
+      - name: stack build
+        run: STACK_YAML=stack-ghc-${{ matrix.ghc }}.yaml stack build
