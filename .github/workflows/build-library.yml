@@ -6,9 +6,6 @@ on:
       - master
     tags:
       - v*
-  release:
-    types:
-      - [published, created, edited]
 
 jobs:
   build:
