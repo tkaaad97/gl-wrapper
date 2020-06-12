@@ -9,6 +9,8 @@ on:
 
 jobs:
   build:
+    name: build with ghc-${{ matrix.ghc }}
+
     strategy:
       matrix:
         ghc:
@@ -16,6 +18,8 @@ jobs:
           - "8.4.4"
           - "8.6.5"
           - "8.8.3"
+
+    runs-on: ubuntu-20.04
 
     container:
       image: docker.pkg.github.com/tkaaad97/gl-wrapper/gl-wrapper-ci:ghc-${{ matrix.ghc }}
@@ -29,9 +33,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.stack
-          key: ghc-${{ matrix.ghc }}-stack-${{ hashFiles('**/package.yaml') }}
+          key: ${{ runner.os }}-ghc-${{ matrix.ghc }}-stack-${{ hashFiles('**/package.yaml') }}
           restore-keys: |
-            ghc-${{ matrix.ghc }}-stack-
+            ${{ runner.os }}-ghc-${{ matrix.ghc }}-stack-
 
       - name: stack build
         run: STACK_YAML=stack-ghc-${{ matrix.ghc }}.yaml stack build
