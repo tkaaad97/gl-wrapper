@@ -39,6 +39,9 @@ jobs:
 
       - name: stack build
         run: |
+          id
+          ls -la ~/
+          pwd
           stack config set system-ghc --global true
           stack config set install-ghc --global false
           stack config set allow-different-user --global true
