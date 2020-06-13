@@ -23,6 +23,8 @@ jobs:
 
     container:
       image: tkaaad97/gl-wrapper-ci:ghc-${{ matrix.ghc }}
+      env:
+        HOME: /root
 
     steps:
       - uses: actions/checkout@v2
