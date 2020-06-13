@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-20.04
 
     container:
-      image: docker.pkg.github.com/tkaaad97/gl-wrapper/gl-wrapper-ci:ghc-${{ matrix.ghc }}
+      image: tkaaad97/gl-wrapper-ci:ghc-${{ matrix.ghc }}
 
     steps:
       - uses: actions/checkout@v2
